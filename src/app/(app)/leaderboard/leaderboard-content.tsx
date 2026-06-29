@@ -81,7 +81,7 @@ export function LeaderboardContent({
     return xp.toLocaleString();
   };
 
-  const { countdownText, isLoading, endDate } = useSeasonCountdown();
+  const { countdownText } = useSeasonCountdown();
 
   return (
     <div className="flex min-h-screen bg-[#0D0E12] font-mono text-white">
