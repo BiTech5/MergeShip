@@ -6,6 +6,11 @@ import { getServerSupabase } from '@/lib/supabase/server';
 import { cacheGet, cacheSet } from '@/lib/cache';
 
 const CACHE_TTL = 60 * 5; // 5 minutes
+const NULL_CACHE_TTL = 60; // 1 minute
+
+type CohortEndDateResponse = {
+  endsAt: string | null;
+};
 
 async function getUserCohortEndDate(userId: string): Promise<string | null> {
   const db = tryGetDb();
