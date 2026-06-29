@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 
 export function useSeasonCountdown() {
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [now, setNow] = useState(() => new Date());
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -25,14 +26,16 @@ export function useSeasonCountdown() {
     }
 
     fetchCohortEndDate();
-    const interval = setInterval(fetchCohortEndDate, 60000);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => setNow(new Date()), 60000);
     return () => clearInterval(interval);
   }, []);
 
   const getCountdownText = () => {
     if (!endDate) return 'No season';
 
-    const now = new Date();
     const diff = endDate.getTime() - now.getTime();
 
     if (diff <= 0) return 'Season ended';
