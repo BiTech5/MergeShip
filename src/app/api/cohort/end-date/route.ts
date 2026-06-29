@@ -49,9 +49,9 @@ export async function GET() {
   }
 
   const cacheKey = `cohort_end_date:${userId}`;
-  const cached = await cacheGet(cacheKey);
+  const cached = await cacheGet<CohortEndDateResponse>(cacheKey);
 
-  if (cached) {
+  if (cached !== null) {
     return Response.json(cached);
   }
 
@@ -61,9 +61,7 @@ export async function GET() {
     endsAt,
   };
 
-  if (endsAt) {
-    await cacheSet(cacheKey, result, CACHE_TTL);
-  }
+  await cacheSet(cacheKey, result, endsAt ? CACHE_TTL : NULL_CACHE_TTL);
 
   return Response.json(result);
 }
